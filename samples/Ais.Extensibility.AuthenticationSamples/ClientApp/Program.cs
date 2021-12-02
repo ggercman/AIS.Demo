@@ -39,14 +39,18 @@ var tokenResponse = await httpClient.RequestPasswordTokenAsync(request);
 
 if (tokenResponse.IsError)
 {
-    throw new Exception(tokenResponse.Error);
+    Console.WriteLine(tokenResponse.Error);
+    Console.WriteLine("Press any key to exit");
+    Console.ReadKey();
+    return;
 }
 
 
 
 httpClient.SetBearerToken(tokenResponse.AccessToken);
 
-using var response = await httpClient.GetAsync("https://localhost:7123/WeatherForecast").ConfigureAwait(false);
+using var response = await httpClient.GetAsync("https://localhost:7123/UserInfo").ConfigureAwait(false);
+//using var response = await httpClient.GetAsync("https://localhost:7123/UserInfo/Admin").ConfigureAwait(false);
 
 Console.WriteLine();
 if (response.StatusCode != System.Net.HttpStatusCode.OK)
